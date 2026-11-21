@@ -1,0 +1,14 @@
+replicaCount: 2
+image:
+  repository: hashicorp/http-echo
+  tag: "0.2.3"
+args:
+  - "-text=Backend API v1.0.0 - Staging Environment"
+  - "-listen=:5678"
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi

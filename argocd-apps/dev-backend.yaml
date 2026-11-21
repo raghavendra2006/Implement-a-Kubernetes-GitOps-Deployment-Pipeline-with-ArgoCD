@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-backend
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: dev
+    app.kubernetes.io/part-of: gitops-pipeline
+    environment: dev
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.generic-webhook: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.generic-webhook: ""
+    notifications.argoproj.io/subscribe.on-health-degraded.generic-webhook: ""
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/raghavendra2006/Implement-a-Kubernetes-GitOps-Deployment-Pipeline-with-ArgoCD.git'
+    targetRevision: HEAD
+    path: apps/backend
+    helm:
+      valueFiles:
+        - ../../environments/dev/backend-values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+      managedFieldsManagers:
+        - kube-controller-manager

@@ -1,0 +1,19 @@
+replicaCount: 3
+image:
+  repository: hashicorp/http-echo
+  tag: "0.2.3"
+args:
+  - "-text=Backend API v1.0.0 - Production Environment"
+  - "-listen=:5678"
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilization: 70

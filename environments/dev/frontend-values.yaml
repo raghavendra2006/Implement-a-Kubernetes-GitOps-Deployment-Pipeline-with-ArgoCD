@@ -1,0 +1,23 @@
+replicaCount: 1
+image:
+  repository: nginx
+  tag: "1.25-alpine"
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+configMap:
+  enabled: true
+  indexHtml: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Frontend - DEV</title></head>
+    <body>
+      <h1>🚀 Frontend Application</h1>
+      <p>Environment: <strong>Development</strong></p>
+      <p>Version: 1.0.0</p>
+    </body>
+    </html>

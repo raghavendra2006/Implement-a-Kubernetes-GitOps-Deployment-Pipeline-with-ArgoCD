@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: gitops-pipeline
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: gitops-pipeline
+spec:
+  description: "GitOps Pipeline Project - Multi-environment deployment"
+  sourceRepos:
+    - 'https://github.com/raghavendra2006/Implement-a-Kubernetes-GitOps-Deployment-Pipeline-with-ArgoCD.git'
+  destinations:
+    - namespace: dev
+      server: 'https://kubernetes.default.svc'
+    - namespace: staging
+      server: 'https://kubernetes.default.svc'
+    - namespace: prod
+      server: 'https://kubernetes.default.svc'
+    - namespace: argocd
+      server: 'https://kubernetes.default.svc'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: true

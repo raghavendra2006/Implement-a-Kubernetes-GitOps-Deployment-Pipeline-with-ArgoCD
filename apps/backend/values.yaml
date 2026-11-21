@@ -1,0 +1,39 @@
+replicaCount: 1
+image:
+  repository: hashicorp/http-echo
+  tag: "0.2.3"
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 5678
+containerPort: 5678
+args:
+  - "-text=Backend API v1.0.0 - Default Environment"
+  - "-listen=:5678"
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+probes:
+  readiness:
+    enabled: true
+    path: /
+    port: 5678
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  liveness:
+    enabled: true
+    path: /
+    port: 5678
+    initialDelaySeconds: 10
+    periodSeconds: 15
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilization: 80
+nodeSelector: {}
+tolerations: []

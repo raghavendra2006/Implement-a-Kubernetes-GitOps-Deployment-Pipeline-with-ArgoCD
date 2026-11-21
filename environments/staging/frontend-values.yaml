@@ -1,0 +1,23 @@
+replicaCount: 2
+image:
+  repository: nginx
+  tag: "1.25-alpine"
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+configMap:
+  enabled: true
+  indexHtml: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Frontend - STAGING</title></head>
+    <body>
+      <h1>🚀 Frontend Application</h1>
+      <p>Environment: <strong>Staging</strong></p>
+      <p>Version: 1.0.0</p>
+    </body>
+    </html>
