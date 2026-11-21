@@ -503,7 +503,7 @@ For production deployments, consider:
 
 ## Demo Video
 
-📹 **[Watch the Demo Video](./demo-video.md)**
+> 📹 **Walkthrough & Demonstration:** A 5–10 minute narrated demonstration recording proving end-to-end functionality.
 
 The demonstration covers:
 1. ✅ Committing a change to the development environment
